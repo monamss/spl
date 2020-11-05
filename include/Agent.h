@@ -6,7 +6,7 @@
 class Agent{
 public:
     Agent();
-    
+
     virtual void act(Session& session)=0;
 };
 
