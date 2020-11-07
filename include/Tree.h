@@ -15,6 +15,7 @@ public:
     virtual int traceTree()=0;
 private:
     int node;
+protected:
     std::vector<Tree*> children;
 }
 

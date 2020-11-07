@@ -23,7 +23,8 @@ public:
     Virus(int nodeInd);
     
     virtual void act(Session& session);
-private:
+
+protected:
     const int nodeInd;
 };
 
