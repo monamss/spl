@@ -18,10 +18,11 @@ public:
     Session(const std::string& path):g(std::vector<std::vector<int>>());
     
     void simulate();
-    void addAgent(const Agent& agent);
+    void addAgent(const Agent& agent); //not copy constructor, will be in a different node, regular constructor
     void setGraph(const Graph& graph);
     
     void enqueueInfected(int);
+    void SetInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;
     

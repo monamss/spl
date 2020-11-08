@@ -6,8 +6,11 @@
 class Agent{
 public:
     Agent();
-
+    virtual Agent* clone()=0;
     virtual void act(Session& session)=0;
+
+//protected:
+//    Session& session;
 };
 
 class ContactTracer: public Agent{

@@ -1,6 +1,7 @@
 #include "../include/Session.h"
 #include <iostream>
 #include <ifstream>
+#include <fstream>
 #include "json.hpp"
 
 using json=nlohmann::json;
@@ -13,4 +14,9 @@ Session::Session(const std::string& path) {
     Graph g(input["graph"]);
     std::string c=input["tree"];
     std::vector<std::vector<int>> matrix=input["graph"];
+}
+
+void Session::addAgent(const Agent &agent) {
+    Agent* Clone=agent.clone(); //heap
+    //add to agent vector
 }
