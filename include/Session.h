@@ -1,6 +1,6 @@
 #ifndef SESSION_H_
 #define SESSION_H_
-
+//RULE OF FIVE
 #include <vector>
 #include <string>
 #include "Graph.h"
@@ -20,7 +20,7 @@ public:
     void simulate();
     void addAgent(const Agent& agent); //not copy constructor, will be in a different node, regular constructor
     void setGraph(const Graph& graph);
-    
+    Graph& getGraphReference();
     void enqueueInfected(int);
     void SetInfected(int);
     int dequeueInfected();

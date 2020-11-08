@@ -16,15 +16,14 @@ public:
 class ContactTracer: public Agent{
 public:
     ContactTracer();
-    
+    virtual Agent* clone();
     virtual void act(Session& session);
 };
-
 
 class Virus: public Agent{
 public:
     Virus(int nodeInd);
-    
+    virtual Agent* clone();
     virtual void act(Session& session);
 
 protected:
