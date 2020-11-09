@@ -8,6 +8,7 @@ public:
     Agent();
     virtual Agent* clone()=0;
     virtual void act(Session& session)=0;
+    virtual ~Agent()=default; //check
 
 //protected:
 //    Session& session;

@@ -1,6 +1,5 @@
 #include "../include/Session.h"
 #include <iostream>
-#include <ifstream>
 #include <fstream>
 #include "json.hpp"
 //RULE OF FIVE
