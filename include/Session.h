@@ -22,23 +22,25 @@ public:
     Session(const Session&);//copy constructor
     Session& operator=(const Session&);//copy assignment
     Session(Session&&);//move constructor
-    Session&operator=(Session&&);//move assignment
-    ~Session();//destructor
+    Session& operator=(Session&&);//move assignment
+    virtual ~Session();//destructor
 
     void simulate();
-    void addAgent(const Agent& agent);
+    void addAgent(const Agent&);
     void setGraph(const Graph& graph);
     Graph& getGraphReference();
     void enqueueInfected(int);
-    void SetInfected(int);
     int dequeueInfected();
+    void SetInfected(int);
     TreeType getTreeType() const;
+    int getNumofCycle() const;
+    bool isFinished();
 
 private:
     Graph g;
+    int cycleNum;
     TreeType treeType;
     std::vector<Agent*> agents;
-    std::queue<int> infected;
 };
 
 #endif

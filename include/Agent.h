@@ -7,28 +7,31 @@
 class Agent{
 public:
     Agent();
-    virtual Agent* clone()=0;
+    virtual Agent* clone() const=0;
     virtual void act(Session& session)=0;
     virtual ~Agent()=default; //check
-
-//protected:
-//    Session& session;
+    virtual int getNodeInd()=0;
 };
 
 class ContactTracer: public Agent{
 public:
     ContactTracer();
-    virtual Agent* clone();
+    virtual Agent* clone() const;
     virtual void act(Session& session);
+    virtual int getNodeInd();
+
+private:
+    const int nodeInd;
 };
 
 class Virus: public Agent{
 public:
     Virus(int nodeInd);
-    virtual Agent* clone();
+    virtual Agent* clone() const;
     virtual void act(Session& session);
+    virtual int getNodeInd();
 
-protected:
+private:
     const int nodeInd;
 };
 
