@@ -9,8 +9,8 @@ public:
     Agent();
     virtual Agent* clone() const=0;
     virtual void act(Session& session)=0;
-    virtual ~Agent()=default; //check
     virtual int getNodeInd()=0;
+    virtual ~Agent()=default; //check
 };
 
 class ContactTracer: public Agent{

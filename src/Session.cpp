@@ -8,19 +8,19 @@ using json=nlohmann::json;
 using namespace std;
 
 Session::Session(const std::string& path):g({}),cycleNum(0),treeType(),agents(){
-    ifstream file("config1.json");
-    json input;
-    file>>input;
+    ifstream file(path);
+    json j;
+    file>>j;
     //file.close();
-    g=Graph(input["graph"]);
-    string type=input["tree"];
+    g=Graph(j["graph"]);
+    string type=j["tree"];
     if(type=="C")
         treeType=Cycle;
     else if(type=="M")
         treeType=MaxRank;
     else if(type=="R")
         treeType=Root;
-    for(pair<string,int> agent:input["agents"]){
+    for(pair<string,int> agent:j["agents"]){
         if(agent.first=="V")
             agents.push_back(new Virus(agent.second));
         else
@@ -84,41 +84,51 @@ void Session::addAgent(const Agent &agent) {
 
 TreeType Session::getTreeType() const {return treeType;}
 
-int Session::getNumofCycle() const {
+int Session::getNumOfCycle() const {
     return cycleNum;
 }
 
 void Session::simulate() {
     bool terminate=false;
     while (!terminate) {
-        for (Agent *agent:agents)
-            agent->act(*this);//*this?
+        int size=agents.size();
+        for (int i = 0; i < size; ++i) {
+            agents[i]->act(*this);
+        }
         cycleNum++;
         terminate=isFinished();
     }
+    for (int i = 0; i < g.getInfectedVector().size(); ++i) {
+        g.getYellow().push_back(g.getInfectedVector()[i]);
+    }
     json output;
     output["graph"]=g.getEdges();
-    output["infected"]=g.getInfectedVector();
+    output["infected"]=g.getYellow();
     string path("output.json");
     ofstream outputFile(path);
     outputFile<<output<<std::endl;
+}
+
+std::vector<Agent *> Session::getAgents() {return agents;}
+
+bool Session::isAgent(int node) {
+    for(Agent*agent:agents)
+        if(node==agent->getNodeInd())
+            return true;
+    return false;
 }
 
 bool Session::isFinished() {
     // each connected component is either fully infected or doesn't have a virus in it
     for(Agent* agent:agents)
         if(agent->getNodeInd()!=-1)
-            if(g.healthyNeighbor(agent->getNodeInd())!=-1)
+            if(g.healthyNeighbor(agent->getNodeInd(),*this)!=-1)
                 return false;
     return true;
 }
 
-void Session::SetInfected(int nodeInd) {
-    g.infectNode(nodeInd);
-}
-
 void Session::enqueueInfected(int nodeInd) {
-    g.getInfectedVector().push_back(nodeInd);
+    g.infectNode(nodeInd);
 }
 
 int Session::dequeueInfected() {

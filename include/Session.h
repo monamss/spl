@@ -31,11 +31,11 @@ public:
     Graph& getGraphReference();
     void enqueueInfected(int);
     int dequeueInfected();
-    void SetInfected(int);
     TreeType getTreeType() const;
-    int getNumofCycle() const;
+    int getNumOfCycle() const;
     bool isFinished();
-
+    bool isAgent(int);
+    std::vector<Agent*> getAgents();
 private:
     Graph g;
     int cycleNum;

@@ -12,31 +12,24 @@ Agent* Virus::clone() const {
 }
 
 void ContactTracer::act(Session &session) {
-    //Tree* bfsTree=session.getGraphReference().BFS(ind);
-    //vector<vector<int>>* edges=session.getCurrPointer()->getEdgesPointer();
-    vector<vector<int>> edges=session.getGraphReference().getEdges();
     int redNode=session.dequeueInfected();
     if(redNode!=-1) {
-        Tree* tree=Tree::createTree(session,redNode);
+        session.getGraphReference().getYellow().push_back(redNode);//////
+        Tree* tree=session.getGraphReference().BFS(redNode,session);
         int indToRemove=tree->traceTree();
-        for(int& elem:edges[indToRemove])//set the row to 0
-            elem=0;
-        for (int i = 0; i < edges.size(); ++i)//set the column to 0
-            edges[i][indToRemove]=0;
+        session.getGraphReference().deleteEdges(indToRemove);
         delete(tree);
     }
 }
 
 void Virus::act(Session &session) {
     Graph g=session.getGraphReference();
-    if(!g.isInfected(nodeInd)) {
-        g.infectNode(nodeInd);
+    if(!g.isInfected(nodeInd)&&!g.isYellow(nodeInd)) {
+        //g.infectNode(nodeInd);
         session.enqueueInfected(nodeInd);
     }
-    int healthyNeighbor=g.healthyNeighbor(nodeInd);
+    int healthyNeighbor=g.healthyNeighbor(nodeInd,session);
     if(healthyNeighbor!=-1) {
-        //
-        //Virus* newVirus=new Virus(healthyNeighbor);
         session.addAgent(Virus(healthyNeighbor));
     }
 }
