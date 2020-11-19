@@ -10,14 +10,14 @@ public:
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
     std::vector<int>& getInfectedVector();
-    int getInfectedNode();
     void deleteEdges(int nodeInd);
     int dequeueInfected();
     std::vector<std::vector<int>>& getEdges();
-    std::vector<int>& getYellow();
     int healthyNeighbor(int,Session);
     Tree* BFS(int start,const Session& session);
     bool isYellow(int);
+    std::vector<int>& getYellow();
+
 private:
     std::vector<std::vector<int>> edges;
     std::vector<int> infected;
